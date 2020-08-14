@@ -9,8 +9,9 @@ marbleSpacing = 2;
 pocketIndent = 5;
 channelIndent = 2; // should be < pocketIndent
 gutterIndent = 10; // should be > channelIndent
+gutterMargin = 5;
 
-boardDiameter = boardSize * (marbleD + marbleSpacing) - marbleSpacing;
+boardDiameter = boardSize * (marbleD + marbleSpacing) - marbleSpacing + gutterMargin * 2;
 
 module pocket() {
     translate([0, 0, -pocketIndent]) sphere(d=marbleD);
@@ -52,24 +53,20 @@ difference() {
     translate([0, 0, boardThickness + marbleD / 2]) {
         intersection() {
             cylinder(d=boardDiameter, h=100, $fn=6, center=true);
+            pockets();
+        }
+        intersection() {
+            cylinder(d=boardDiameter + gutterMargin * 2, h=100, $fn=6, center=true);
             union() {
-                pockets();
                 channels();
                 rotate([0, 0, 60]) channels();
                 rotate([0, 0, 120]) channels();
             }
         }
 
-        // gutter
-        translate([0, 0, -gutterIndent]) minkowski() {
-            // make a thin perimeter to minkowski around
-            difference() {
-                cylinder(d=boardDiameter + marbleD + 0.0001, h=0.0001, $fn=6, center=true);
-                cylinder(d=boardDiameter + marbleD, h=marbleD, $fn=6, center=true);
-            }
-            union() {
-                sphere(d=marbleD);
-                cylinder(d=marbleD, h=marbleD/2);
+        translate([0, 0, -gutterIndent]) {
+            rotate_extrude($fn=6) {
+                translate([(boardDiameter + marbleD) / 2, 0]) circle(d=marbleD, $fn=30);
             }
         }
     }
