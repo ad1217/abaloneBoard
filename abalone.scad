@@ -27,7 +27,7 @@ function gridOffset(idx) = (marbleD + marbleSpacing) * (idx - (boardSize - 1) / 
 
 module gridStrip() {
     for(col = [0: boardSize - 1]) {
-        translate([gridOffset(col), 0, 0]) rotate([0, 0, 30])
+        translate([gridOffset(col), 0, 0]) rotate(30)
             children();
     }
 }
@@ -57,10 +57,8 @@ difference() {
         }
         intersection() {
             cylinder(d=boardDiameter + gutterMargin * 2, h=100, $fn=6, center=true);
-            union() {
-                channels();
-                rotate([0, 0, 60]) channels();
-                rotate([0, 0, 120]) channels();
+            for(angle = [0, 60, 120]) {
+                rotate(angle) channels();
             }
         }
 
