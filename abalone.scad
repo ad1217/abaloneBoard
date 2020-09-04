@@ -2,17 +2,19 @@
 
 fn=30;
 $fn=fn;
-margin=5;
 boardThickness = 8;
 boardSize = 3; // diameter, measured in marbles. Must be odd.
 marbleD = 16;
 marbleSpacing = 2;
 pocketIndent = 5;
 channelIndent = 2; // should be < pocketIndent
-gutterIndent = pocketIndent; // should be > channelIndent
 gutterMargin = 6;
+gutterDiameter = 1.2 * marbleD;
+gutterIndent = gutterDiameter * 0.4; // should be > channelIndent
+margin=-2;
 
-boardDiameter = boardSize * (marbleD + marbleSpacing) - marbleSpacing + gutterMargin * 2;
+boardDiameter = boardSize * (marbleD + marbleSpacing) - marbleSpacing; // without gutter & margin
+totalBoardDiameter = boardDiameter + (gutterDiameter + gutterMargin + margin) * 2;
 
 module pocket() {
     translate([0, 0, -pocketIndent]) sphere(d=marbleD);
@@ -50,7 +52,7 @@ module channels() {
 
 difference() {
     translate([0, 0, boardThickness/2])
-        cylinder(d=boardDiameter + (marbleD + margin) * 2, h=boardThickness, $fn=6, center=true);
+        cylinder(d=totalBoardDiameter, h=boardThickness, $fn=6, center=true);
     translate([0, 0, boardThickness + marbleD / 2]) {
         intersection() {
             cylinder(d=boardDiameter, h=100, $fn=6, center=true);
@@ -62,11 +64,12 @@ difference() {
                 rotate(angle) channels();
             }
         }
+    }
 
-        translate([0, 0, -gutterIndent]) {
-            rotate_extrude($fn=6) {
-                translate([(boardDiameter + marbleD) / 2, 0]) circle(d=marbleD, $fn=fn);
-            }
+    translate([0, 0, boardThickness + gutterDiameter/2 - gutterIndent]) {
+        rotate_extrude($fn=6) {
+            translate([(boardDiameter + gutterMargin + gutterDiameter) / 2, 0])
+                circle(d=gutterDiameter, $fn=fn);
         }
     }
 }
