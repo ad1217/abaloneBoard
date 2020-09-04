@@ -1,11 +1,11 @@
 // All dimensions are mm, unless otherwise noted
 
-fn=30;
+fn=50;
 $fn=fn;
 boardThickness = 8;
 boardSize = 3; // diameter, measured in marbles. Must be odd.
 marbleD = 16;
-marbleSpacing = 2;
+marbleSpacing = 1.5;
 pocketIndent = 5;
 channelIndent = 2; // should be < pocketIndent
 gutterMargin = 6;
