@@ -1,6 +1,7 @@
 // All dimensions are mm, unless otherwise noted
 
-$fn=30;
+fn=30;
+$fn=fn;
 boardThickness = 20;
 margin=5;
 boardSize = 5; // diameter, measured in marbles. Must be odd.
@@ -64,7 +65,7 @@ difference() {
 
         translate([0, 0, -gutterIndent]) {
             rotate_extrude($fn=6) {
-                translate([(boardDiameter + marbleD) / 2, 0]) circle(d=marbleD, $fn=30);
+                translate([(boardDiameter + marbleD) / 2, 0]) circle(d=marbleD, $fn=fn);
             }
         }
     }
