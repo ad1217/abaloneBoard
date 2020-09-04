@@ -2,15 +2,15 @@
 
 fn=30;
 $fn=fn;
-boardThickness = 20;
 margin=5;
-boardSize = 5; // diameter, measured in marbles. Must be odd.
-marbleD = 30;
+boardThickness = 8;
+boardSize = 3; // diameter, measured in marbles. Must be odd.
+marbleD = 16;
 marbleSpacing = 2;
 pocketIndent = 5;
 channelIndent = 2; // should be < pocketIndent
-gutterIndent = 10; // should be > channelIndent
-gutterMargin = 5;
+gutterIndent = pocketIndent; // should be > channelIndent
+gutterMargin = 6;
 
 boardDiameter = boardSize * (marbleD + marbleSpacing) - marbleSpacing + gutterMargin * 2;
 
